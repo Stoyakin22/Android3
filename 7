@@ -1,1 +1,41 @@
-<iframe src="https://pl.kotl.in/Ekw3q5zeu"></iframe>
+data class Pet(val name: String, val age: Int)
+data class Owner(val firstName: String, val lastName: String, val pets: List<Pet>)
+
+fun optimizePetData(petData: List<List<String>>): List<Owner> {
+    val ownerPets = HashMap<Pair<String, String>, MutableList<Pet>>()
+    for (petInfo in petData) {
+        if (petInfo.size == 4) {
+            try {
+                val pet = Pet(petInfo[0], petInfo[1].toInt())
+                val owner = Pair(petInfo[2], petInfo[3])
+                ownerPets.computeIfAbsent(owner) { mutableListOf() }.add(pet)
+            } catch (e: NumberFormatException) {
+                println("Warning: Invalid age for pet ${petInfo[0]}. Skipping this entry.")
+            }
+        } else {
+            println("Warning: Invalid data format for entry: $petInfo. Skipping this entry.")
+        }
+    }
+
+    return ownerPets.map { (owner, pets) ->
+        Owner(owner.first, owner.second, pets)
+    }
+}
+
+fun main() {
+    val petDataList = listOf(
+        listOf("Барсик", "5", "Иван", "Иванов"),
+        listOf("Мурка", "3", "Иван", "Иванов"),
+        listOf("Рыжик", "2", "Петр", "Петров"),
+        listOf("Пушок", "1", "Иван", "Иванов"),
+        listOf("Васька", "7", "Сидор", "Сидоров"),
+        listOf("Invalid Data", "3", "Peter", "Petrov") //Example of invalid data entry
+    )
+
+
+    val optimizedData = optimizePetData(petDataList)
+
+    optimizedData.forEach { owner ->
+        println("${owner.firstName} ${owner.lastName}: ${owner.pets.joinToString { "${it.name}(${it.age})" }}")
+    }
+}
