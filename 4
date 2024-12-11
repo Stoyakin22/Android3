@@ -1,1 +1,19 @@
-<iframe src="https://pl.kotl.in/fpzbPjP2Y"></iframe>
+fun reverseDictionary(ruEnDictionary: Map<String, String>): Map<String, String> {
+    val enRuDictionary = mutableMapOf<String, String>()
+    for ((russianWord, englishWord) in ruEnDictionary) {
+        enRuDictionary[englishWord] = russianWord
+    }
+    return enRuDictionary
+}
+
+fun main() {
+    val ruEnDict = mapOf(
+        "привет" to "hello",
+        "мир" to "world",
+        "солнце" to "sun",
+        "дождь" to "rain"
+    )
+
+    val enRuDict = reverseDictionary(ruEnDict)
+    println(enRuDict) // Output: {hello=привет, world=мир, sun=солнце, rain=дождь}
+}
