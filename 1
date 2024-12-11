@@ -1,1 +1,18 @@
-<iframe src="https://pl.kotl.in/-x-UncHep"></iframe>
+fun countDistinctNumbers(numbers: List<Int>): Int {
+    return numbers.toSet().size
+}
+
+fun main() {
+    val numbers1 = listOf(1, 2, 2, 3, 4, 4, 5, 1)
+    val distinctCount1 = countDistinctNumbers(numbers1)
+    println("Distinct numbers in $numbers1: $distinctCount1") // Output: 5
+
+    val numbers2 = listOf(1, 1, 1, 1)
+    val distinctCount2 = countDistinctNumbers(numbers2)
+    println("Distinct numbers in $numbers2: $distinctCount2") // Output: 1
+
+    val numbers3 = emptyList<Int>()
+    val distinctCount3 = countDistinctNumbers(numbers3)
+    println("Distinct numbers in $numbers3: $distinctCount3") // Output: 0
+
+}
