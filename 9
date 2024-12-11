@@ -1,1 +1,38 @@
-<iframe src="https://pl.kotl.in/iXQT9IJSn"></iframe>
+fun areAnagrams(str1: String, str2: String): Boolean {
+    // Remove punctuation, whitespace, and convert to lowercase
+    val cleanedStr1 = str1.lowercase().replace("[^a-zA-Zа-яА-Я]".toRegex(), "")
+    val cleanedStr2 = str2.lowercase().replace("[^a-zA-Zа-яА-Я]".toRegex(), "")
+
+    //Handle empty strings
+    if (cleanedStr1.isEmpty() || cleanedStr2.isEmpty()) return cleanedStr1 == cleanedStr2
+
+    // Check if lengths are different (optimization)
+    if (cleanedStr1.length != cleanedStr2.length) return false
+
+    //Efficient Anagram Check using character counts
+    val charCounts1 = mutableMapOf<Char, Int>()
+    val charCounts2 = mutableMapOf<Char, Int>()
+
+
+    for (char in cleanedStr1) {
+        charCounts1[char] = charCounts1.getOrDefault(char, 0) + 1
+    }
+    for (char in cleanedStr2) {
+        charCounts2[char] = charCounts2.getOrDefault(char, 0) + 1
+    }
+
+    return charCounts1 == charCounts2
+}
+
+fun main() {
+    println(areAnagrams("Listen", "Silent"))  // true
+    println(areAnagrams("Debit card", "Bad credit"))  // true
+    println(areAnagrams("A gentleman", "Elegant man"))  // true
+    println(areAnagrams("поток", "копот"))  //true
+    println(areAnagrams("hello", "world"))  // false
+    println(areAnagrams("", "")) // true
+    println(areAnagrams(" ", "")) //false
+    println(areAnagrams("hello,", "hello")) //true
+    println(areAnagrams("hello!", "hello")) //true
+
+}
