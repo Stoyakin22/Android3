@@ -1,1 +1,28 @@
-<iframe src="https://pl.kotl.in/UY8BHWbC6g"></iframe>
+fun processNumbers(input: String): List<String> {
+    val numbers = input.split(" ").map { it.toInt() }
+    val seenNumbers = HashSet<Int>()
+    val results = mutableListOf<String>()
+
+    for (number in numbers) {
+        results.add(if (seenNumbers.contains(number)) "YES" else "NO")
+        seenNumbers.add(number)
+    }
+    return results
+}
+
+fun main() {
+    val inputString = "1 2 3 2 4 1 5 6 3"
+    val outputList = processNumbers(inputString)
+    outputList.forEach { println(it) }
+    /* Output:
+       NO
+       NO
+       NO
+       YES
+       NO
+       YES
+       NO
+       NO
+       YES
+     */
+}
