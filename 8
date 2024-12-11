@@ -1,1 +1,47 @@
-<iframe src="https://pl.kotl.in/yL3PTSIrI"></iframe>
+import java.lang.Character.isLetterOrDigit
+
+fun findLeastFrequentWord(sentence: String): String {
+    val words = sentence.lowercase()
+        .replace("[^a-zA-Zа-яА-Я0-9\\s]".toRegex(), "") //remove all non-alphanumeric characters except spaces
+        .split("\\s+".toRegex())
+        .filter { it.isNotBlank() }
+
+    if (words.isEmpty()) return "" // Handle empty input
+
+    val wordCounts = mutableMapOf<String, Int>()
+    for (word in words) {
+        wordCounts[word] = wordCounts.getOrDefault(word, 0) + 1
+    }
+
+    val minFrequency = wordCounts.values.minOrNull() ?: 0
+    val leastFrequentWords = wordCounts.filter { it.value == minFrequency }
+        .map { it.key }
+        .sorted()
+
+    return leastFrequentWords.firstOrNull() ?: "" // Handle empty leastFrequentWords (all words have the same frequency)
+}
+
+fun main() {
+    val sentence1 = "Это тест, тест. Тест!"
+    println("Наименее частотное слово в \"$sentence1\": ${findLeastFrequentWord(sentence1)}") //это
+
+    val sentence2 = "Один два три четыре пять шесть семь восемь девять десять один"
+    println("Наименее частотное слово в \"$sentence2\": ${findLeastFrequentWord(sentence2)}") //два
+
+    val sentence3 = "А роза упала на лапу Азора"
+    println("Наименее частотное слово в \"$sentence3\": ${findLeastFrequentWord(sentence3)}") //азора
+
+    val sentence4 = ""
+    println("Наименее частотное слово в \"$sentence4\": ${findLeastFrequentWord(sentence4)}") // ""
+
+    val sentence5 = "  "
+    println("Наименее частотное слово в \"$sentence5\": ${findLeastFrequentWord(sentence5)}") // ""
+
+    val sentence6 = "The quick brown fox jumps over the lazy fox."
+    println("Наименее частотное слово в \"$sentence6\": ${findLeastFrequentWord(sentence6)}") //brown
+
+    val sentence7 = "One one two two three three three"
+    println("Наименее частотное слово в \"$sentence7\": ${findLeastFrequentWord(sentence7)}") //one
+
+
+}
