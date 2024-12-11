@@ -1,1 +1,24 @@
-<iframe src="https://pl.kotl.in/iAVVWsqJQ"></iframe>
+fun calculateScrabbleScore(word: String): Int {
+    val letterValues = mapOf(
+        'а' to 1, 'в' to 1, 'е' to 1, 'и' to 1, 'н' to 1, 'о' to 1, 'р' to 1, 'с' to 1, 'т' to 1,
+        'д' to 2, 'к' to 2, 'л' to 2, 'м' to 2, 'п' to 2, 'у' to 2,
+        'б' to 3, 'г' to 3, 'ё' to 3, 'ь' to 3, 'я' to 3,
+        'й' to 4, 'ы' to 4,
+        'ж' to 5, 'з' to 5, 'х' to 5, 'ц' to 5, 'ч' to 5,
+        'ш' to 8, 'э' to 8, 'ю' to 8,
+        'ф' to 10, 'щ' to 10, 'ъ' to 10
+    )
+
+    var totalScore = 0
+    for (char in word.lowercase()) {
+        totalScore += letterValues[char] ?: 0 // Handle letters not in the map (score 0)
+    }
+    return totalScore
+}
+
+fun main() {
+    print("Введите слово: ")
+    val word = readLine()?.lowercase() ?: "" // Read input, handle null, and lowercase for case-insensitivity
+    val score = calculateScrabbleScore(word)
+    println("Стоимость слова '$word': $score очков")
+}
