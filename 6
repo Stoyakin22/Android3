@@ -1,1 +1,33 @@
-<iframe src="https://pl.kotl.in/93li1Fju7"></iframe>
+data class Purchase(val customer: String, val item: String, val quantity: Int)
+
+fun main() {
+    print("Введите количество записей о покупках (n): ")
+    val n = readLine()?.toIntOrNull() ?: 0 // Safe input, defaults to 0 if invalid
+
+    val purchases = mutableListOf<Purchase>()
+    for (i in 1..n) {
+        print("Введите запись ${i} (Покупатель Товар Количество): ")
+        val input = readLine()?.trim()?.split("\\s+".toRegex()) ?: emptyList()
+        if (input.size == 3) {
+            try {
+                val purchase = Purchase(input[0], input[1], input[2].toInt())
+                purchases.add(purchase)
+            } catch (e: NumberFormatException) {
+                println("Ошибка: Некорректное количество товара. Проверьте ввод.")
+            }
+        } else {
+            println("Ошибка: Неверный формат записи. Должно быть три поля (Покупатель Товар Количество).")
+        }
+    }
+
+    // Calculate total quantity
+    val totalQuantity = purchases.sumOf { it.quantity }
+    println("\nОбщее количество единиц товара: $totalQuantity")
+
+    // Display purchases by customer
+    val purchasesByCustomer = purchases.groupBy { it.customer }
+    for ((customer, customerPurchases) in purchasesByCustomer) {
+        println("\nПокупки покупателя $customer:")
+        customerPurchases.forEach { println("  - ${it.item}: ${it.quantity}") }
+    }
+}
